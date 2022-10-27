@@ -37,10 +37,10 @@ public class Formatter {
 
     public static void validate(Locale locale, String fmt, Object... args) {
         if (Objects.isNull(locale)) {
-            throw new IllegalArgumentException("Parameter locale cannot be null");
+            throw new IllegalArgumentException("Argument locale cannot be null");
         }
         if (Objects.isNull(fmt)) {
-            throw new IllegalArgumentException("Parameter fmt cannot be null");
+            throw new IllegalArgumentException("Argument fmt cannot be null");
         }
     }
 }
