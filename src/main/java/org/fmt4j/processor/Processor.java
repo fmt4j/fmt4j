@@ -1,18 +1,17 @@
 package org.fmt4j.processor;
 
-import java.util.IllegalFormatException;
-import java.util.List;
+import org.fmt4j.syntax.IParser;
 
 public class Processor {
-    static final char LeftBracket = '{';
-    static final char RightBracket = '}';
+    static final public char LeftBracket = '{';
+    static final public char RightBracket = '}';
 
-    String fmt;
-    List<Object> args;
+    final String fmt;
+    final IParser parser;
 
-    public Processor(String fmt, List<Object> args) {
+    public Processor(String fmt, IParser parser) {
         this.fmt = fmt;
-        this.args = args;
+        this.parser = parser;
     }
 
     public StringBuilder process() {
@@ -25,14 +24,36 @@ public class Processor {
 
             if (codePoint == (int) LeftBracket) {
                 int nextOffset = offset + codePointCharCount;
-                while (nextOffset < fmt.length() && fmt.codePointAt(nextOffset) != (int) RightBracket) {
-                    final int nextCodePoint = fmt.codePointAt(nextOffset);
-                    final int nextCodePointCharCount = Character.charCount(nextCodePoint);
+
+                // check right bracket missing
+                if (nextOffset >= fmt.length()) {
+                    throw new IllegalArgumentException("Argument formatter close bracket missing");
+                }
+
+                int nextCodePoint = fmt.codePointAt(nextOffset);
+                int nextCodePointCharCount = Character.charCount(nextCodePoint);
+
+                // {{ escape
+                if (nextCodePoint == (int) LeftBracket) {
+                    builder.append(LeftBracket);
+                    offset += codePointCharCount + nextCodePointCharCount;
+                    continue;
+                }
+
+                // formatter field
+                while (nextOffset < fmt.length() && nextCodePoint != (int) RightBracket) {
+                    nextCodePoint = fmt.codePointAt(nextOffset);
+                    nextCodePointCharCount = Character.charCount(nextCodePoint);
                     nextOffset += nextCodePointCharCount;
                 }
+
+                // check right bracket missing
                 if (nextOffset >= fmt.length()) {
-                    throw new IllegalArgumentException("Argument fmt missing right bracket");
+                    throw new IllegalArgumentException("Argument formatter close bracket missing");
                 }
+
+                builder.append(parser.parse(fmt.substring(offset + codePointCharCount, nextOffset)));
+                offset = nextOffset;
             } else {
                 builder.append(codePoint);
                 offset += codePointCharCount;

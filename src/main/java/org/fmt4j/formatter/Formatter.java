@@ -1,46 +1,26 @@
 package org.fmt4j.formatter;
 
+import org.fmt4j.processor.Processor;
+import org.fmt4j.syntax.IParser;
+import org.fmt4j.syntax.Parser;
+
+import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class Formatter {
-    public static String format(String fmt, Object... args) {
-        return format(Locale.getDefault(), fmt, args);
+    public static final PrintStreamFormatter out = new PrintStreamFormatter(System.out);
+    public static final PrintStreamFormatter err = new PrintStreamFormatter(System.err);
+
+    public static String format(String formatter, Object... args) {
+        return format(Locale.getDefault(), formatter, args);
     }
 
-    public static String format(Locale locale, String fmt, Object... args) {
-        validate(locale, fmt, args);
-        return null;
-    }
-
-    public static String print(String fmt, Object... args) {
-        return print(Locale.getDefault(), fmt, args);
-    }
-
-    public static String print(Locale locale, String fmt, Object... args) {
-        validate(locale, fmt, args);
-        return null;
-    }
-
-    public static String println(String fmt, Object... args) {
-        return println(Locale.getDefault(), fmt, args);
-    }
-
-    public static String println(Locale locale, String fmt, Object... args) {
-        validate(locale, fmt, args);
-        return print(locale, fmt + "%n", args);
-    }
-
-    public static void validate(String fmt, Object... args) {
-        validate(Locale.getDefault(), fmt, args);
-    }
-
-    public static void validate(Locale locale, String fmt, Object... args) {
-        if (Objects.isNull(locale)) {
-            throw new IllegalArgumentException("Argument locale cannot be null");
-        }
-        if (Objects.isNull(fmt)) {
-            throw new IllegalArgumentException("Argument fmt cannot be null");
-        }
+    public static String format(Locale locale, String formatter, Object... args) {
+        Validator.validate(locale, formatter, args);
+        final IParser parser = new Parser(List.of(args));
+        final Processor processor = new Processor(formatter, parser);
+        final StringBuilder builder = processor.process();
+        final String message = builder.toString();
+        return message;
     }
 }

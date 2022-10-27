@@ -2,17 +2,15 @@ package org.fmt4j.syntax;
 
 import java.util.List;
 
-public class Parser {
-    static final char LeftBracket = '{';
-    static final char RightBracket = '}';
+public class Parser implements IParser {
+    final List<Object> args;
 
-    String fmt;
-
-    public Parser(String fmt) {
-        this.fmt = fmt;
+    public Parser(List<Object> args) {
+        this.args = args;
     }
 
-    List<String> parse() {
+    @Override
+    public String parse(final String field) {
         return null;
     }
 }

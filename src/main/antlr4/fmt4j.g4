@@ -1,5 +1,4 @@
 grammar fmt4j;
 
-r: 'hello' ID;
-ID: [a-z]+;
+POS: [0-9]+;
 WS: [ \t\r\n]+ -> skip;
