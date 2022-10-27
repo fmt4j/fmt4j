@@ -1,2 +1,3 @@
 # fmt4j
-A java formatting library using curly brackets
+
+A java formatting library using curly brackets.
