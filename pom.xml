@@ -13,15 +13,52 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- dependency version -->
-        <dependency.junit.version>4.13.2</dependency.junit.version>
+        <junit.version>4.13.2</junit.version>
+        <antlr4.version>4.11.1</antlr4.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${dependency.junit.version}</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4</artifactId>
+            <version>${antlr4.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>${antlr4.version}</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-maven-plugin</artifactId>
+                <version>${antlr4.version}</version>
+                <executions>
+                    <execution>
+                        <id>antlr</id>
+                        <goals>
+                            <goal>antlr4</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <configuration>
+                <libDirectory>src/main/antlr4/imports</libDirectory>
+                <sourceDirectory>src/main/antlr4</sourceDirectory>
+                <outputDirectory>src/main/java</outputDirectory>
+                <listener>true</listener>
+                <visitor>false</visitor>
+                <treatWarningsAsErrors>true</treatWarningsAsErrors>
+            </configuration>
+        </plugins>
+    </build>
 </project>
