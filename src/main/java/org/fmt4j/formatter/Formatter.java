@@ -20,7 +20,6 @@ public class Formatter {
         final IParser parser = new Parser(List.of(args));
         final Processor processor = new Processor(formatter, parser);
         final StringBuilder builder = processor.process();
-        final String message = builder.toString();
-        return message;
+        return builder.toString();
     }
 }
