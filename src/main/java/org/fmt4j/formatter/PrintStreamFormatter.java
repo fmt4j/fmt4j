@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.util.Locale;
 
 public class PrintStreamFormatter {
-    final PrintStream stream;
+    private final PrintStream stream;
 
     public PrintStreamFormatter(PrintStream stream) {
         this.stream = stream;
