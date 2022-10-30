@@ -1,11 +1,11 @@
-package org.fmt4j.syntax;
+package org.fmt4j.parser;
 
 import java.util.List;
 
-public class Parser implements IParser {
+public class SyntaxParser implements Parser {
     final List<Object> args;
 
-    public Parser(List<Object> args) {
+    public SyntaxParser(List<Object> args) {
         this.args = args;
     }
 

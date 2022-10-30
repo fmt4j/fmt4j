@@ -1,15 +1,15 @@
 package org.fmt4j.processor;
 
-import org.fmt4j.syntax.IParser;
+import org.fmt4j.parser.Parser;
 
 public class Processor {
     static final public char LeftBracket = '{';
     static final public char RightBracket = '}';
 
     final String fmt;
-    final IParser parser;
+    final Parser parser;
 
-    public Processor(String fmt, IParser parser) {
+    public Processor(String fmt, Parser parser) {
         this.fmt = fmt;
         this.parser = parser;
     }

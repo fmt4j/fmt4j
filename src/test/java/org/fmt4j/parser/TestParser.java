@@ -1,4 +1,4 @@
-package org.fmt4j.syntax;
+package org.fmt4j.parser;
 
 public class TestParser {
 }

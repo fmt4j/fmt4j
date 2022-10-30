@@ -1,8 +1,8 @@
 package org.fmt4j.formatter;
 
 import org.fmt4j.processor.Processor;
-import org.fmt4j.syntax.IParser;
-import org.fmt4j.syntax.Parser;
+import org.fmt4j.parser.Parser;
+import org.fmt4j.parser.SyntaxParser;
 
 import java.util.List;
 import java.util.Locale;
@@ -17,7 +17,7 @@ public class Formatter {
 
     public static String format(Locale locale, String formatter, Object... args) {
         Validator.validate(locale, formatter, args);
-        final IParser parser = new Parser(List.of(args));
+        final Parser parser = new SyntaxParser(List.of(args));
         final Processor processor = new Processor(formatter, parser);
         final StringBuilder builder = processor.process();
         return builder.toString();
